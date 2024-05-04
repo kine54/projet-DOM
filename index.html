@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkpoint Cart</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    
+    <div class="container flex">
+    <div class="structure">
+        <h1>panier</h1>
+
+       <table id="table" >
+        <thead>
+            <tr>
+              <th>Nom de l'article</th>
+              <th>Quantité</th>
+              <th>Prix unitaire</th>
+              <th>Sous total</th>
+            </tr>
+        </thead>
+        <tbody id="all_products">
+        <tr>
+          <td class="article--name"><div style="margin-right:1rem"><img src="https://img.freepik.com/vecteurs-libre/panier-supermarche-pictogramme-epicerie_1284-11697.jpg?t=st=1714744736~exp=1714745336~hmac=9b148420b1e013705f954ad9fc0b54bc7acb734f1195f0b2cccf31c2397da9a7" width="100"  height="100"></div> <div><h3>Sac de riz</h3> <a class="remove" id="1">suppimer</a></div></td>
+
+          <td class="quantity">
+              <button class="qty-minus" id="1">-</button>
+              <input type="text" readonly placeholder="Unit price" class="qty" value="1">
+              <button class="qty-plus" id="1">+</button>
+               </td>
+          <td class="price"> 15000 fr</td>
+          <td class="subtotal">15000 fr</td>
+        </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+          <td><input type="text" id="name-product" placeholder="Nom de l'article" contenteditable></td>
+          <td><input type="number" step="1" id="price_product" value="1000" contenteditable></td>
+          <td></td> 
+          <td><button type="button" id="add_button">Ajouter un article</button></td>
+            </tr>
+        </tfoot>
+       </table>
+       <h2>Total :<span id="total_display">0  fr cfa</span></h2>
+    </div>
+    </div>
+
+   <script src="./js/dom.js"></script>
+</body>
+</html>
