@@ -1,52 +1,179 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkpoint Cart</title>
-    <link rel="stylesheet" href="/css/style.css">
-</head>
-<body>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Checkpoint Cart</title>
+        <link rel="stylesheet" href="/style.css">
     
-    <div class="container flex">
-    <div class="structure">
-        <h1>panier</h1>
-
-       <table id="table" >
-        <thead>
-            <tr>
-              <th>Nom de l'article</th>
-              <th>Quantité</th>
-              <th>Prix unitaire</th>
-              <th>Sous total</th>
-            </tr>
-        </thead>
-        <tbody id="all_products">
-        <tr>
-          <td class="article--name"><div style="margin-right:1rem"><img src="https://img.freepik.com/vecteurs-libre/panier-supermarche-pictogramme-epicerie_1284-11697.jpg?t=st=1714744736~exp=1714745336~hmac=9b148420b1e013705f954ad9fc0b54bc7acb734f1195f0b2cccf31c2397da9a7" width="100"  height="100"></div> <div><h3>Sac de riz</h3> <a class="remove" id="1">suppimer</a></div></td>
-
-          <td class="quantity">
-              <button class="qty-minus" id="1">-</button>
-              <input type="text" readonly placeholder="Unit price" class="qty" value="1">
-              <button class="qty-plus" id="1">+</button>
-               </td>
-          <td class="price"> 15000 fr</td>
-          <td class="subtotal">15000 fr</td>
-        </tr>
-        </tbody>
-        <tfoot>
-            <tr>
-          <td><input type="text" id="name-product" placeholder="Nom de l'article" contenteditable></td>
-          <td><input type="number" step="1" id="price_product" value="1000" contenteditable></td>
-          <td></td> 
-          <td><button type="button" id="add_button">Ajouter un article</button></td>
-            </tr>
-        </tfoot>
-       </table>
-       <h2>Total :<span id="total_display">0  fr cfa</span></h2>
-    </div>
-    </div>
-
-   <script src="./js/dom.js"></script>
-</body>
-</html>
+    </head>
+    <body>
+        
+        <div class="container">
+            <div class="structure">
+                <h1>Panier</h1>
+    
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nom de l'article</th>
+                            <th>Quantité</th>
+                            <th>Prix unitaire</th>
+                            <th>Sous-total</th>
+                        </tr>
+                    </thead>
+                    <tbody id="all_products">
+                        <tr>
+                        <td class="article--name">
+                            <div style="margin-right:1rem">
+                                <img src="https://img.freepik.com/vecteurs-libre/panier-supermarche-pictogramme-epicerie_1284-11697.jpg?t=st=1714744736~exp=1714745336~hmac=9b148420b1e013705f954ad9fc0b54bc7acb734f1195f0b2cccf31c2397da9a7" width="100" height="100">
+                            </div> 
+                            <div>
+                                <h3>Sac de riz</h3> 
+                             <button type="button" class="remove" id="1">supprimer</button>
+                            </div>
+                        </td> 
+                        <td class="quantity">
+                            <button class="qty-minus" id="1">
+                                -
+                            </button> 
+                            <input type="text" readonly placeholder="Prix unitaire" class="qty" value="0">
+                            <button class="qty-plus" id="1">
+                                +
+                            </button> 
+                        </td>
+                        <td class="price">
+                            15000
+                        </td>
+                        <td class="subtotal"> 
+                            0
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td><input type="text" id="name-product" placeholder="Nom de l'article" contenteditable></td>
+                            <td><input type="number" step="1" id="price_product" value="1000" contenteditable></td>
+                            <td></td> 
+                            <td><button type="button" id="add_button">Ajouter un article</button></td>
+                        </tr>
+                    </tfoot>
+                </table>
+                <h2>Total : <span id="total_display">0 fr cfa</span></h2>
+            </div>
+        </div>
+        <script src="dom.js"></script>
+<!--
+   <script>
+       document.addEventListener('DOMContentLoaded', function() {
+        const addToCartButtons = document.querySelectorAll('.add-to-cart');
+        const cartItems = document.querySelector('.cart-items');
+        const totalDisplay = document.querySelector('.total');
+    
+        let total = 0;
+    
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const product = this.parentElement;
+                const productName = product.querySelector('h3').innerText;
+                const productPrice = parseFloat(this.getAttribute('data-price'));
+    
+                const item = document.createElement('li');
+                item.innerText = `${productName} - ${productPrice}€`;
+                cartItems.appendChild(item);
+    
+                total += productPrice;
+                totalDisplay.innerText = total;
+            });
+        });
+    
+        const btnPlusAll = document.querySelectorAll('.qty-plus');
+        const btnMinusAll = document.querySelectorAll('.qty-minus');
+        const addButton = document.querySelector('#add_button');
+    
+        btnPlusAll.forEach((btn) => {btn.addEventListener('click', increaseQuantity)});
+        btnMinusAll.forEach((btn) => {btn.addEventListener('click', decreaseQuantity)});
+    
+        addButton.addEventListener('click', addArticle);
+    
+        function increaseQuantity() {
+            const qtyInput = this.parentElement.querySelector('.qty');
+            qtyInput.value = parseInt(qtyInput.value) + 1;
+            subtotal(this);
+            calculateTotal();
+        }
+    
+        function decreaseQuantity() {
+            const qtyInput = this.parentElement.querySelector('.qty');
+            if (qtyInput.value > 0) {
+                qtyInput.value = parseInt(qtyInput.value) - 1;
+                subtotal(this);
+                calculateTotal();
+            }
+        }
+    
+        function subtotal(button) {
+            const priceElement = button.parentElement.parentElement.querySelector('.price');
+            const qtyInput = button.parentElement.querySelector('.qty');
+            const price = parseInt(priceElement.innerHTML);
+            const qty = parseInt(qtyInput.value);
+            const subt = price * qty;
+            button.parentElement.parentElement.querySelector('.subtotal').innerHTML = subt + 'fr';
+        }
+    
+        function calculateTotal() {
+            const subtotals = document.querySelectorAll('.subtotal');
+            let total = 0;
+            subtotals.forEach(subtotal => {
+                total += parseInt(subtotal.innerHTML);
+            });
+            document.querySelector('#total_display').textContent = total + ' fr cfa';
+        }
+    
+    
+    
+        function addArticle() {
+            const name = document.querySelector('#name-product');
+            const price = document.querySelector('#price_product');
+            document.querySelector('#all_products').innerHTML += 
+            `<tr>
+                <td class="article--name">
+                    <div style="margin-right:1rem">
+                        <img src="https://img.freepik.com/vecteurs-libre/panier-supermarche-pictogramme-epicerie_1284-11697.jpg?t=st=1714744736~exp=1714745336~hmac=9b148420b1e013705f954ad9fc0b54bc7acb734f1195f0b2cccf31c2397da9a7" width="100" height="100">
+                    </div> 
+                    <div>
+                        <h3>${name.value}</h3> 
+                        <button type = "button" class="remove" id="1">supprimer</button>
+                    </div>
+                </td> 
+                <td class="quantity">
+                    <button class="qty-minus" id="1">
+                        -
+                    </button> 
+                    <input type="text" readonly placeholder="Prix unitaire" class="qty" value="1">
+                    <button class="qty-plus" id="1">
+                        +
+                    </button> 
+                </td>
+                <td class="price">
+                    ${price.value} fr
+                </td>
+                <td class="subtotal"> 
+                    ${price.value} fr
+                </td>
+            </tr>`;
+            loadNewElement();
+        }
+    
+        function loadNewElement() {
+            const btnPlusAll = document.querySelectorAll('.qty-plus');
+            const btnMinusAll = document.querySelectorAll('.qty-minus');
+            btnPlusAll.forEach((btn) => {btn.addEventListener('click', increaseQuantity)});
+            btnMinusAll.forEach((btn) => {btn.addEventListener('click', decreaseQuantity)});
+        }
+      });
+      let btn = document.getElementById('1')
+</script>
+-->
+    </body>
+    </html>
